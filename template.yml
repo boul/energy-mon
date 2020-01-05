@@ -104,15 +104,15 @@ Resources:
     Properties:
       Name: ResourceDefinition
       InitialVersion:
-      ResourceDefinitionId: !Ref ResourceDefinition
-      Resources:
-        - Id: "ttyUSB0"
-          Name: "ttyUSB0"
-          ResourceDataContainer:
-            LocalDeviceResourceData:
-              GroupOwnerSetting:
-                AutoAddGroupOwner: 'true'
-              SourcePath: '/dev/ttyUSB0'
+        ResourceDefinitionId: !Ref ResourceDefinition
+        Resources:
+          - Id: "ttyUSB0"
+            Name: "ttyUSB0"
+            ResourceDataContainer:
+              LocalDeviceResourceData:
+                GroupOwnerSetting:
+                  AutoAddGroupOwner: 'true'
+                SourcePath: '/dev/ttyUSB0'
 
         
 
