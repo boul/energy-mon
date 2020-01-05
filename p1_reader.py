@@ -203,4 +203,4 @@ if __name__ == '__main__':
     main()
 
 main()
-sleep(10)
+time.sleep(10)
