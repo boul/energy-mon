@@ -32,7 +32,7 @@ Resources:
     Type: AWS::Greengrass::GroupVersion
     Properties:
       # GroupId: {'Fn::ImportValue': !Sub '${CoreName}-environment-GreengrassGroupId'}
-      GroupId: '05104db5-eaa9-4715-ae48-61a44355d482'
+      GroupId: "05104db5-eaa9-4715-ae48-61a44355d482"
       CoreDefinitionVersionArn: !Ref GreengrassCoreDefinitionVersion
       FunctionDefinitionVersionArn: !GetAtt FunctionDefinition.LatestVersionArn
       SubscriptionDefinitionVersionArn: !GetAtt SubscriptionDefinition.LatestVersionArn
@@ -69,7 +69,7 @@ Resources:
                 - "/"
                 - - "cert"
                   # - {'Fn::ImportValue': !Sub '${CoreName}-environment-IoTThingCertificateId'}
-                  - - '949b9799e50710f1e2c4b4c29ce2861f634e6336d87da70ad656fa0779d8bcaa'
+                  - "949b9799e50710f1e2c4b4c29ce2861f634e6336d87da70ad656fa0779d8bcaa"
           SyncShadow: "false"
 
   FunctionDefinition:
@@ -166,4 +166,4 @@ Resources:
 
 Outputs:
   GroupId:
-    Value: '05104db5-eaa9-4715-ae48-61a44355d482'
+    Value: "05104db5-eaa9-4715-ae48-61a44355d482"
