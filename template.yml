@@ -14,6 +14,10 @@ Parameters:
     Type: String
     Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
     Default: ''
+  CoreName:
+    Description: Greengrass Core on which your resources are deployed
+    Default: "coreName"
+    Type: String
 
 Globals:
   Function:

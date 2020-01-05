@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 topic = os.environ['TOPIC']
 pv_address = os.environ['PV_ADDRESS']
 p1_port = os.environ['P1_PORT']
-poll_interval = os.environ['POLL_INTERVAL']
+poll_interval = int(os.environ['POLL_INTERVAL'])
 
 def main():
      
