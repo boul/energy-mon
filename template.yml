@@ -96,7 +96,35 @@ Resources:
                   # RunAs:
                   #   Uid: '1'
                   #   Gid: '10'
-
+  
+  SubscriptionDefinition:
+    Type: 'AWS::Greengrass::SubscriptionDefinition'
+    Properties:
+      Name: SubscriptionDefinition
+      InitialVersion:
+        # Example of one-to-many subscriptions in single definition version
+        Subscriptions:
+          - Id: Subscription1
+            Source: 'cloud'
+            Subject: !Join
+              - "/"
+              - - !Ref CoreName
+                - "in"
+            Target: !Ref GGSampleFunction.Version
+          - Id: Subscription2
+            Source: !Ref GGSampleFunction.Version
+            Subject: !Join
+              - "/"
+              - - !Ref CoreName
+                - "out"
+            Target: 'cloud'
+          - Id: Subscription3
+            Source: !Ref GGSampleFunction.Version
+            Subject: !Join
+              - "/"
+              - - !Ref CoreName
+                - "telem"
+            Target: 'cloud'
   EnergyMain:
     Type: AWS::Serverless::Function
     Properties:
