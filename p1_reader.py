@@ -79,7 +79,7 @@ def main():
         #
         # client.publish(topic + "/timestamp", str(int(time.time())))
         # logger.debug(p1_data)
-        client.publish(topic='p1-test' + "/p1", payload=p1_data, qos=1)
+        client.publish(topic='p1-test' + "/p1", payload=p1_data, qos=0)
 
         # for k, v in glob_p1_data.iteritems():
 
