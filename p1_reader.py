@@ -35,6 +35,8 @@ def main():
         #     # client.publish(topic + "/" + k, v)
 
     
+
+    
     # Asynchronously schedule this function to be run again in 10 seconds
     Timer(10, main).start()
 
