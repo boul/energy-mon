@@ -2,8 +2,7 @@ import serial
 import logging
 import greengrasssdk
 import json
-import time
-import threading
+from threading import Timer
 
 
 _tst = lambda x: (2000+int(x[0:2]),
@@ -60,7 +59,7 @@ OBIS = {
 
 print("hello")
 
-def main:
+def main():
 
     print('bla')
    
