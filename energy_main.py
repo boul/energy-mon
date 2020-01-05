@@ -2,21 +2,19 @@ import logging
 import greengrasssdk
 import json
 import dsmr4_reader
-import sunspec_modbus_tcp
 from threading import Timer
 
 logger = logging.getLogger(__name__)
 
-
-print("hello")
+topic = os.environ['TOPIC'])
+pv_address = os.environ['PV_ADDRESS'])
+p1_port = os.environ['P1_PORT'])
 
 def main():
-
-    print('bla')
-   
+     
     client = greengrasssdk.client('iot-data')
 
-    p1_meter = dsmr4_reader.Meter('/dev/ttyUSB0', simulate=True)
+    p1_meter = dsmr4_reader.Meter(pv_port, simulate=False)
     glob_p1_data = p1_meter.get_telegram()
 
     if glob_p1_data is not None:
@@ -30,16 +28,16 @@ def main():
         #
         # client.publish(topic + "/timestamp", str(int(time.time())))
         # logger.debug(p1_data)
-        client.publish(topic='energy-test' + "/p1", payload=p1_data, qos=0)
+        
+        client.publish(topic=topic + "/p1", payload=p1_data, qos=0)
 
         # for k, v in glob_p1_data.iteritems():
-
         #     logger.debug("Topic: {0}/p1 Key: {1} Value: {2}"
         #                     .format(topic, k.replace("-", "_"), v))
         #     # client.publish(topic + "/" + k, v)
 
     
-    sunspec_client = sunspec_modbus_tcp.SunSpecModBusTcpClient('abb-135541-3g96-3712.local', 502, 2)
+    sunspec_client = sunspec_modbus_tcp.SunSpecModBusTcpClient(pv_address, 502, 2)
 
     glob_pv_data = sunspec_client.get_sunspec_data()
 
@@ -47,7 +45,8 @@ def main():
 
         pv_data = json.dumps(glob_pv_data)
         logger.debug(pv_data)
-        # client.publish(topic + "/pv", pv_data, qos=1)
+
+        client.publish(topic + "/pv", pv_data, qos=0)
 
         # client.publish(topic + "/timestamp", str(int(time.time())))
 
@@ -59,17 +58,12 @@ def main():
     else:
         logger.warning('No PV Data! Sun down? or Logger Down')
 
-
-
     # Asynchronously schedule this function to be run again in 10 seconds
     Timer(10, main).start()
 
-
-
-
 # This is a dummy handler and will not be invoked
 # Instead the code above will be executed in an infinite loop for our example
-def function_handler(event, context):
+def handler(event, context):
     return
 
 if __name__ == '__main__':
