@@ -16,7 +16,7 @@ Parameters:
     Default: ''
   CoreName:
     Description: Greengrass Core on which your resources are deployed
-    Default: "coreName"
+    Default: "boul-home_Core"
     Type: String
 
 Globals:
