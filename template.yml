@@ -93,7 +93,7 @@ Resources:
                 Variables:
                   CORE_NAME: !Ref CoreName
                 ResourceAccessPolicies:
-                - ResourceId: "ttyUSB0"
+                - ResourceId: 'ttyUSB0'
                   Permission: rw
                 AccessSysfs: 'false'
                 Execution:
@@ -108,13 +108,13 @@ Resources:
       Name: ResourceDefinition
       InitialVersion:
         Resources:
-          - Id: "ttyUSB0"
-            Name: "ttyUSB0"
+          - Id: ttyUSB0
+            Name: ttyUSB0
             ResourceDataContainer:
               LocalDeviceResourceData:
                 GroupOwnerSetting:
                   AutoAddGroupOwner: 'true'
-                SourcePath: '/dev/ttyUSB0'
+                SourcePath: /dev/ttyUSB0
 
         
 
