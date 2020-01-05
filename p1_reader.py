@@ -200,3 +200,6 @@ class Meter():
 
 if __name__ == '__main__':
     main()
+
+main()
+sleep(10)
