@@ -145,7 +145,7 @@ Resources:
             Target: 'cloud'
           - Id: Subscription3
             Source: !Ref EnergyMain.Version
-            Subject: "energy-test/#""
+            Subject: "energy-test/#"
             Target: 'cloud'
   
   EnergyMain:
