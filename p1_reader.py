@@ -88,7 +88,7 @@ def main():
         #     # client.publish(topic + "/" + k, v)
 
     time.sleep(10)
-    return()
+    return
 
 
 class Meter():
