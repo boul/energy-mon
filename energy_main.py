@@ -17,7 +17,7 @@ def main():
      
     client = greengrasssdk.client('iot-data')
 
-    p1_meter = dsmr4_reader.Meter(pv_port, simulate=False)
+    p1_meter = dsmr4_reader.Meter(p1_port, simulate=False)
     glob_p1_data = p1_meter.get_telegram()
 
     if glob_p1_data is not None:
