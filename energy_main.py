@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 topic = os.environ['TOPIC'])
 pv_address = os.environ['PV_ADDRESS'])
 p1_port = os.environ['P1_PORT'])
+poll_interval = os.environ['POLL_INTERVAL'])
 
 def main():
      
@@ -59,7 +60,7 @@ def main():
         logger.warning('No PV Data! Sun down? or Logger Down')
 
     # Asynchronously schedule this function to be run again in 10 seconds
-    Timer(10, main).start()
+    Timer(poll_interval, main).start()
 
 # This is a dummy handler and will not be invoked
 # Instead the code above will be executed in an infinite loop for our example
