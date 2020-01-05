@@ -28,7 +28,7 @@ Globals:
       Role: !Ref CodeDeployRole
 
 Resources:
-  P1Reader:
+  EnergyMain:
     Type: AWS::Serverless::Function
     Properties:
       Handler: energy_main.handler
