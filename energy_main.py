@@ -3,6 +3,7 @@ import greengrasssdk
 import json
 import dsmr4_reader
 import sunspec_modbus_tcp_reader
+import os
 from threading import Timer
 
 logger = logging.getLogger(__name__)
