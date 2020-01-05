@@ -2,14 +2,15 @@ import logging
 import greengrasssdk
 import json
 import dsmr4_reader
+import sunspec_modbus_tcp_reader
 from threading import Timer
 
 logger = logging.getLogger(__name__)
 
-topic = os.environ['TOPIC'])
-pv_address = os.environ['PV_ADDRESS'])
-p1_port = os.environ['P1_PORT'])
-poll_interval = os.environ['POLL_INTERVAL'])
+topic = os.environ['TOPIC']
+pv_address = os.environ['PV_ADDRESS']
+p1_port = os.environ['P1_PORT']
+poll_interval = os.environ['POLL_INTERVAL']
 
 def main():
      
@@ -37,9 +38,7 @@ def main():
         #                     .format(topic, k.replace("-", "_"), v))
         #     # client.publish(topic + "/" + k, v)
 
-    
-    sunspec_client = sunspec_modbus_tcp.SunSpecModBusTcpClient(pv_address, 502, 2)
-
+    sunspec_client = sunspec_modbus_tcp_reader.SunSpecModBusTcpClient(pv_address, 502, 2)
     glob_pv_data = sunspec_client.get_sunspec_data()
 
     if glob_pv_data is not None:
@@ -50,7 +49,6 @@ def main():
         client.publish(topic + "/pv", pv_data, qos=0)
 
         # client.publish(topic + "/timestamp", str(int(time.time())))
-
         # for k, v in glob_pv_data.iteritems():
 
             # logger.debug("Topic: {0}/pv Key: {1} Value: {2}"
