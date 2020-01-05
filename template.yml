@@ -27,7 +27,7 @@ Resources:
   P1Reader:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: p1_reader.main
+      Handler: p1_reader.handler
       Runtime: python3.7
       Role:
         Fn::GetAtt:
