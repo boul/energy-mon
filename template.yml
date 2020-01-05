@@ -31,7 +31,8 @@ Resources:
   GreengrassGroupVersion:
     Type: AWS::Greengrass::GroupVersion
     Properties:
-      GroupId: {'Fn::ImportValue': !Sub '${CoreName}-environment-GreengrassGroupId'}
+      # GroupId: {'Fn::ImportValue': !Sub '${CoreName}-environment-GreengrassGroupId'}
+      GroupId: '05104db5-eaa9-4715-ae48-61a44355d482'
       CoreDefinitionVersionArn: !Ref GreengrassCoreDefinitionVersion
       FunctionDefinitionVersionArn: !GetAtt FunctionDefinition.LatestVersionArn
       SubscriptionDefinitionVersionArn: !GetAtt SubscriptionDefinition.LatestVersionArn
@@ -67,7 +68,8 @@ Resources:
               - !Join
                 - "/"
                 - - "cert"
-                  - {'Fn::ImportValue': !Sub '${CoreName}-environment-IoTThingCertificateId'}
+                  # - {'Fn::ImportValue': !Sub '${CoreName}-environment-IoTThingCertificateId'}
+                  - - '949b9799e50710f1e2c4b4c29ce2861f634e6336d87da70ad656fa0779d8bcaa'
           SyncShadow: "false"
 
   FunctionDefinition:
@@ -161,3 +163,7 @@ Resources:
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
       PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'
+
+Outputs:
+  GroupId:
+    Value: '05104db5-eaa9-4715-ae48-61a44355d482'
