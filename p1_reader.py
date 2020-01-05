@@ -87,7 +87,7 @@ def main():
         #                     .format(topic, k.replace("-", "_"), v))
         #     # client.publish(topic + "/" + k, v)
 
-    time.sleep(10)
+    
     return
 
 
