@@ -10,7 +10,7 @@ def main():
 
     print('bla')
    
-    client = greengrasssdk.client('iot-data', region_name='eu-west-1')
+    client = greengrasssdk.client('iot-data')
 
     p1_meter = dsmr4_reader.Meter('/dev/ttyUSB0', simulate=False)
     glob_p1_data = p1_meter.get_telegram()
