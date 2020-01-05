@@ -196,6 +196,8 @@ class Meter():
         self.logger.debug(telegram)
         self.logger.debug("\n***** Processed Message End *****")
 
+        # print(telegram)
+
         return telegram
 
 
