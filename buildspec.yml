@@ -8,6 +8,7 @@ phases:
 
       # Upgrade AWS CLI to the latest version
       - pip install --upgrade awscli
+      - ls
       - pip install pyserial -t .
 
   pre_build:
