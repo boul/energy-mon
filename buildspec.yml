@@ -10,6 +10,8 @@ phases:
       - pip install --upgrade awscli
       - ls
       - pip install pyserial -t .
+      - pip install requirements.txt -t .
+      - ls
 
   pre_build:
     commands:
