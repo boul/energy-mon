@@ -32,7 +32,7 @@ def main():
         # client.publish(topic + "/timestamp", str(int(time.time())))
         # logger.debug(p1_data)
         
-        client.publish(topic=topic + "/p1", payload=p1_data, qos=0)
+        client.publish(topic=topic + "/p1", payload=p1_data, qos=1)
 
         # for k, v in glob_p1_data.iteritems():
         #     logger.debug("Topic: {0}/p1 Key: {1} Value: {2}"
@@ -47,7 +47,7 @@ def main():
         pv_data = json.dumps(glob_pv_data)
         logger.debug(pv_data)
 
-        client.publish(topic + "/pv", pv_data, qos=0)
+        client.publish(topic + "/pv", pv_data, qos=1)
 
         # client.publish(topic + "/timestamp", str(int(time.time())))
         # for k, v in glob_pv_data.iteritems():
