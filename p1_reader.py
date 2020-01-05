@@ -1,8 +1,9 @@
 import serial
 import logging
-import boto3
+import greengrasssdk
 import json
 import time
+import threading
 
 
 _tst = lambda x: (2000+int(x[0:2]),
@@ -59,9 +60,10 @@ OBIS = {
 
 print("hello")
 
-def handler(event, context):
+def main:
 
     print('bla')
+   
     client = boto3.client('iot-data', region_name='eu-west-1')
 
     p1_meter = Meter('/dev/ttyUSB0', simulate=False)
@@ -87,7 +89,8 @@ def handler(event, context):
         #     # client.publish(topic + "/" + k, v)
 
     
-    return
+    # Asynchronously schedule this function to be run again in 5 seconds
+    Timer(10, main).start()
 
 
 class Meter():
@@ -205,7 +208,12 @@ class Meter():
         return telegram
 
 
-# if __name__ == '__main__':
-#     main()
+# This is a dummy handler and will not be invoked
+# Instead the code above will be executed in an infinite loop for our example
+def function_handler(event, context):
+    return
 
-# main()
+if __name__ == '__main__':
+    main()
+
+main()
