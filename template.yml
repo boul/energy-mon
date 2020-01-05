@@ -92,6 +92,9 @@ Resources:
               Environment:
                 Variables:
                   CORE_NAME: !Ref CoreName
+                ResourceAccessPolicies:
+                - ResourceId: "ttyUSB0"
+                  Permission: rw
                 AccessSysfs: 'false'
                 Execution:
                   IsolationMode: GreengrassContainer
@@ -103,16 +106,19 @@ Resources:
     Type: 'AWS::Greengrass::ResourceDefinition'
     Properties:
       Name: ResourceDefinition
-      InitialVersion:
-        ResourceDefinitionId: !Ref ResourceDefinition
-        Resources:
-          - Id: "ttyUSB0"
-            Name: "ttyUSB0"
-            ResourceDataContainer:
-              LocalDeviceResourceData:
-                GroupOwnerSetting:
-                  AutoAddGroupOwner: 'true'
-                SourcePath: '/dev/ttyUSB0'
+
+  ResourceDefinitionVersion:
+    Type: 'AWS::Greengrass::ResourceDefinitionVersion'
+    Properties:
+      ResourceDefinitionId: !Ref ResourceDefinition
+      Resources:
+        - Id: "ttyUSB0"
+          Name: "ttyUSB0"
+          ResourceDataContainer:
+            LocalDeviceResourceData:
+              GroupOwnerSetting:
+                AutoAddGroupOwner: 'true'
+              SourcePath: '/dev/ttyUSB0'
 
         
 
