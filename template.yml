@@ -36,6 +36,8 @@ Resources:
       CoreDefinitionVersionArn: !Ref GreengrassCoreDefinitionVersion
       FunctionDefinitionVersionArn: !GetAtt FunctionDefinition.LatestVersionArn
       SubscriptionDefinitionVersionArn: !GetAtt SubscriptionDefinition.LatestVersionArn
+      ResourceDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
+
 
   GreengrassCoreDefinition:
     Type: AWS::Greengrass::CoreDefinition
