@@ -1,4 +1,5 @@
 
 # pysunspec version
-version = '1.0.7'
+version = '2.0.0'
+
 

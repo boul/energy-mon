@@ -1,6 +1,6 @@
 
 """
-    Copyright (C) 2016 SunSpec Alliance
+    Copyright (C) 2018 SunSpec Alliance
 
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the "Software"),
@@ -22,11 +22,16 @@
 """
 
 import struct
+import sys
 
 try:
     import xml.etree.ElementTree as ET
 except:
     import elementtree.ElementTree as ET
+
+# Python 3 compatibility for long()
+if sys.version_info > (3,):
+    long = int
 
 MBMAP_ROOT = 'mbmap'
 MBMAP_ADDR = 'addr'
@@ -65,6 +70,39 @@ class ModbusMapError(Exception):
     pass
 
 class ModbusMap(object):
+    """
+    Parameters:
+
+        slave_id :
+            Modbus slave id.
+
+        func :
+            Modbus function string associated with the map. Valid values are:
+                :const:`sunspec.core.modbus.mbmap.MBMAP_FUNC_HOLDING` or
+                :const:`sunspec.core.modbus.mbmap.MBMAP_FUNC_INPUT`.
+
+        base_addr :
+            Base address of the Modbus map.
+
+    Raises:
+
+        ModbusMapError: Raised for any modbus map error.
+
+    Attributes:
+
+        slave_id
+            Modbus slave id.
+
+        func
+            Actual Modbus function associated with the map.
+
+        base_addr
+            Base address of the Modbus map.
+
+        regs
+            List of :const:`sunspec.core.modbus.mbmap.ModbusMapRegs` blocks that
+            comprise the Modbus register map.
+    """
 
     def __init__(self, slave_id=None, func=MBMAP_FUNC_HOLDING, base_addr=MBMAP_BASE_ADDR_DEFAULT, ns=None, lid=None,
                  mapid=None, time=None):
@@ -94,7 +132,7 @@ class ModbusMap(object):
                     data_list = line.rstrip('\r\n').split()
                     data_len = len(data_list)/2
                     if data_len > 0:
-                        # print offset, data_list
+                        # print(offset, data_list)
                         for b in data_list:
                             c = struct.pack('B', int(b, 16))
                             if data is None:
@@ -105,7 +143,7 @@ class ModbusMap(object):
             mmr = ModbusMapRegs(offset, len(data)/2, data, MBMAP_REGS_ACCESS_RW)
             self.regs.append(mmr)
             f.close()
-        except Exception, e:
+        except Exception as e:
             try:
                 f.close()
             except:
@@ -113,6 +151,17 @@ class ModbusMap(object):
             raise ModbusMapError('Error loading map file: %s' % str(e))
 
     def from_xml(self, filename=None, pathlist=None, element=None):
+        """Load Modbus map from a Modbus map (mbmap) formatted file.
+
+        Parameters:
+
+            filename :
+                File name of the Modbus map file
+
+            pathlist :
+                Pathlist object containing alternate paths to the Modbus map
+                file.
+        """
 
         offset = 0
         next_offset = offset
@@ -200,7 +249,12 @@ class ModbusMap(object):
                 elif rtype == MBMAP_REGS_TYPE_STRING:
                     if rlen == 0:
                         rlen = (len(text) + 3)/4
-                    data = struct.pack(str(rlen * 2) + 's', str(text))
+
+                    # Python 3 compatibility for byte strings
+                    if sys.version_info > (3,):
+                        text = bytes(text, 'latin-1')
+
+                    data = struct.pack(str(rlen * 2) + 's', text)
                 elif rtype == MBMAP_REGS_TYPE_HEX_STRING:
                     if text:
                         # remove any spaces
@@ -237,7 +291,7 @@ class ModbusMap(object):
                 else:
                     last_regs.append(offset, rlen, data, access)
 
-        except Exception, e:
+        except Exception as e:
             raise ModbusMapError('Error loading %s (%s) at offset %d - %s' % (filename, pathlist, offset, str(e)))
 
     def to_xml(self, parent=None, no_data=False):
@@ -253,7 +307,7 @@ class ModbusMap(object):
             attr[MBMAP_MAPID] = str(self.mapid)
         if self.time is not None:
             attr[MBMAP_TIME] = str(self.time)
- 
+
         if parent is None:
             element = ET.Element(MBMAP_ROOT, attrib=attr)
         else:
@@ -300,8 +354,22 @@ class ModbusMap(object):
         return mmr
 
     def read(self, addr, count, op=None):
+        """Read Modbus map registers.
 
-        data = ''
+        Parameters:
+
+            addr :
+                Starting Modbus address.
+
+            count :
+                Read length in Modbus registers.
+
+        Returns:
+
+            Byte string containing register contents.
+        """
+
+        data = b''
         count_remaining = count
 
         if op and op != self.func:
@@ -325,12 +393,22 @@ class ModbusMap(object):
 
         # must have all requested data for success
         if len(data) != int(count) * 2:
-            print self
+            print(self)
             raise ModbusMapError('Data read error - addr = %d  data len = %d  count = %d' % (addr, len(data), count))
 
         return data
-    
+
     def write(self, addr, data):
+        """Write Modbus map registers.
+
+        Parameters:
+
+            addr :
+                Starting Modbus address.
+
+            count :
+                Byte string containing register contents.
+        """
 
         data_len = len(data)
         count_remaining = data_len/2
@@ -349,7 +427,9 @@ class ModbusMap(object):
                         write_count = count_remaining
                     # regs
                     # data += regs.read(offset, read_count)
-                    regs.write(offset, data[data_offset:data_offset+(write_count * 2)])
+                    start = data_offset
+                    end = int(data_offset + (write_count * 2))
+                    regs.write(offset, data[start:end])
                     offset += write_count
                     data_offset += write_count
                     count_remaining -= write_count
@@ -363,6 +443,10 @@ class ModbusMap(object):
            raise ModbusMapError('Data write error')
 
     def not_equal(self, mbmap):
+        """ Determines if the specified modbus map instance is not equal based
+        on the content of the map.  If not equal, returns a string indicating
+        why the map is not equal. Returns False if the map is equal.
+        """
 
         if self.base_addr != mbmap.base_addr:
             return ('Base address mismatch: %s %s' % (str(self.base_addr), str(mbmap.base_addr)))
@@ -385,6 +469,42 @@ class ModbusMap(object):
         return s
 
 class ModbusMapRegs(object):
+    """
+    Parameters:
+
+        offset :
+            Register offset into Modbus map.
+
+        count :
+            Register count.
+
+        data :
+            Byte string containing register data.
+
+        access:
+            Access for the register block. Valid values are:
+                :const:`sunspec.core.modbus.mbmap.MBMAP_REGS_ACCESS_R` and
+                :const:`sunspec.core.modbus.mbmap.MBMAP_REGS_ACCESS_RW`.
+
+    Raises:
+
+        :exception ModbusMapError: Raised for any modbus map error.
+
+    Attributes:
+
+        offset
+            Start register offset of the register block.
+
+        count
+            Register count in the block.
+
+        data
+            Byte string containing data in the register block.
+
+        access
+            Access setting for the block. The access setting is currently not
+            enforced.
+    """
 
     def __init__(self, offset, count, data, access=MBMAP_REGS_ACCESS_R):
         self.offset = offset
@@ -393,6 +513,20 @@ class ModbusMapRegs(object):
         self.access = access
 
     def read(self, offset, count):
+        """Read Modbus map registers in register block.
+
+        Parameters:
+
+            offset :
+                Register offset into Modbus map.
+
+            count :
+                Register count.
+
+        Returns:
+            Byte string containing register contents.
+        """
+
         regs_end_offset = self.offset + self.count
         end_offset = offset + count
         read_count = count
@@ -407,19 +541,53 @@ class ModbusMapRegs(object):
             raise ModbusMapError('Data read error')
 
     def write(self, offset, data):
+        """Write Modbus map registers tp register block.
+
+        Parameters:
+
+            addr :
+                Register offset into Modbus map.
+
+            count :
+                Byte string containing register contents.
+        """
         count = len(data)/2
         if (offset >= self.offset) and (offset + count <= self.offset + self.count):
             start = (offset - self.offset) * 2
-            end = start + (count * 2)
+            end = int(start + (count * 2))
             self.data = self.data[:start] + data + self.data[end:]
         else:
            raise ModbusMapError('Data write error')
 
     def append(self, offset, count, data, access=MBMAP_REGS_ACCESS_R):
+        """Append registers to end of register block.
+
+        Parameters:
+
+            offset :
+                Register offset into Modbus map.
+
+            count :
+                Register count.
+
+            data :
+                Byte string containing register data.
+
+            access :
+                Access for the register block. Valid values are:
+                    :const:`sunspec.core.modbus.mbmap.MBMAP_REGS_ACCESS_R` and
+                    :const:`sunspec.core.modbus.mbmap.MBMAP_REGS_ACCESS_RW`.
+        """
+
         self.data += data
         self.count += count
 
     def not_equal(self, regs):
+        """ Determines if the specified modbus map block instance is not equal
+        based on the content of the map block.  If not equal, returns a string
+        indicating why the map block is not equal. Returns False if the map
+        block is equal.
+        """
 
         if self.offset != regs.offset:
             return ('Offset mismatch: %d %d' % (self.offset, regs.offset))
