@@ -59,9 +59,7 @@ OBIS = {
 
 print("hello")
 
-
-
-def main():
+def handler(event, context):
 
     print('bla')
     client = boto3.client('iot-data', region_name='eu-west-1')
@@ -91,9 +89,6 @@ def main():
     
     return
 
-def handler(event, context):
-
-    main()
 
 class Meter():
 
