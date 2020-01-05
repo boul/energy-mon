@@ -28,7 +28,7 @@ Globals:
       Role: !Ref CodeDeployRole
 
 Resources:
-   GreengrassGroupVersion:
+  GreengrassGroupVersion:
     Type: AWS::Greengrass::GroupVersion
     Properties:
       GroupId: {'Fn::ImportValue': !Sub '${CoreName}-environment-GreengrassGroupId'}
