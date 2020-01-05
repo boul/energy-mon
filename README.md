@@ -1,7 +1,7 @@
 Home project to monitor energy usage and production
 ==============================================
 
-This project leverages AWS greengrass from a raspberry PI to poll data from my smart meter and solar inverter
+This project leverages AWS greengrass from a raspberry PI to poll data from my smart meter and solar inverter.
 
 The smart meter polled using a serial cable on the P1 port, this meter is logging according to the dutch DMSR 4.2 spec.
 The solar inverter is polled over modbus TCP using the SunSpec standard. The inverter at my home is from PowerOne / ABB.
@@ -9,7 +9,7 @@ The solar inverter is polled over modbus TCP using the SunSpec standard. The inv
 What's Here
 -----------
 
-This sample includes:
+This project includes:
 
 * README.md - this file
 * buildspec.yml - this file is used by AWS CodeBuild to package this
