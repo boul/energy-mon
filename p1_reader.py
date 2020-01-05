@@ -156,7 +156,7 @@ class Meter():
         raw_lines = []
         self.logger.debug("***** P1 Message Start ******")
         while True:
-            line = ser.readline().strip()
+            line = ser.readline().decode('ascii').strip()
 
             self.logger.debug(line)
             if line.startswith('!'):
