@@ -106,19 +106,15 @@ Resources:
     Type: 'AWS::Greengrass::ResourceDefinition'
     Properties:
       Name: ResourceDefinition
-
-  ResourceDefinitionVersion:
-    Type: 'AWS::Greengrass::ResourceDefinitionVersion'
-    Properties:
-      ResourceDefinitionId: !Ref ResourceDefinition
-      Resources:
-        - Id: "ttyUSB0"
-          Name: "ttyUSB0"
-          ResourceDataContainer:
-            LocalDeviceResourceData:
-              GroupOwnerSetting:
-                AutoAddGroupOwner: 'true'
-              SourcePath: '/dev/ttyUSB0'
+      InitialVersion:
+        Resources:
+          - Id: "ttyUSB0"
+            Name: "ttyUSB0"
+            ResourceDataContainer:
+              LocalDeviceResourceData:
+                GroupOwnerSetting:
+                  AutoAddGroupOwner: 'true'
+                SourcePath: '/dev/ttyUSB0'
 
         
 
