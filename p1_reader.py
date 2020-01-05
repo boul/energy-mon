@@ -91,6 +91,9 @@ def main():
     
     return
 
+def handler(event, context):
+
+    main()
 
 class Meter():
 
@@ -206,8 +209,7 @@ class Meter():
 
         return telegram
 
-def handler(event, context)
-main()
+
 # if __name__ == '__main__':
 #     main()
 
