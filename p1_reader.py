@@ -87,6 +87,8 @@ def main():
         #                     .format(topic, k.replace("-", "_"), v))
         #     # client.publish(topic + "/" + k, v)
 
+        time.sleep(10)
+
 
 class Meter():
 
@@ -205,3 +207,5 @@ class Meter():
 
 if __name__ == '__main__':
     main()
+
+main()
