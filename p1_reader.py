@@ -129,13 +129,15 @@ class Meter():
 
     def get_telegram(self):
 
+        print('get-telegram')
+
         telegram = {}
 
         ser = self._get_connection()
 
         # Wait for first line of telegram
         while True:
-            line = ser.readline().strip().strip('\0')
+            line = ser.readline().decode('ascii').strip().strip('\0')
             if not line.startswith('/'):
                 self.logger.debug('skipping line: {0}'.format(line))
                 continue
