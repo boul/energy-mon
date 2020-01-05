@@ -63,7 +63,7 @@ def main():
 
     print('bla')
    
-    client = boto3.client('iot-data', region_name='eu-west-1')
+    client = greengrasssdk.client('iot-data', region_name='eu-west-1')
 
     p1_meter = Meter('/dev/ttyUSB0', simulate=False)
     glob_p1_data = p1_meter.get_telegram()
