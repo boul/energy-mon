@@ -110,21 +110,22 @@ Resources:
               - "/"
               - - !Ref CoreName
                 - "in"
-            Target: !Ref GGSampleFunction.Version
+            Target: !Ref EnergyMain.Version
           - Id: Subscription2
-            Source: !Ref GGSampleFunction.Version
+            Source: !Ref EnergyMain.Version
             Subject: !Join
               - "/"
               - - !Ref CoreName
                 - "out"
             Target: 'cloud'
           - Id: Subscription3
-            Source: !Ref GGSampleFunction.Version
+            Source: !Ref EnergyMain.Version
             Subject: !Join
               - "/"
               - - !Ref CoreName
                 - "telem"
             Target: 'cloud'
+  
   EnergyMain:
     Type: AWS::Serverless::Function
     Properties:
