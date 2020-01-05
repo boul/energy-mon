@@ -88,7 +88,7 @@ def main():
         #     # client.publish(topic + "/" + k, v)
 
     time.sleep(10)
-    main()
+    return()
 
 
 class Meter():
@@ -206,7 +206,7 @@ class Meter():
         return telegram
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 
-main()
+# main()
