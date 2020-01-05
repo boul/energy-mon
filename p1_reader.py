@@ -87,7 +87,8 @@ def main():
         #                     .format(topic, k.replace("-", "_"), v))
         #     # client.publish(topic + "/" + k, v)
 
-        time.sleep(10)
+    time.sleep(10)
+    main()
 
 
 class Meter():
@@ -125,7 +126,7 @@ class Meter():
             self.logger.warning("SIMULATION!!! "
                              "Opening a file to simulate serial output")
 
-            ser = open("/energy-monitor/test/p1.raw", 'rb')
+            ser = open("tests/p1.raw", 'rb')
 
             return ser
 
