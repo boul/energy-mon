@@ -95,7 +95,7 @@ Resources:
                 Variables:
                   CORE_NAME: !Ref CoreName
                   TOPIC: energy
-                  PV_ADDRESS: "abb-135541-3g96-3712.local"
+                  PV_ADDRESS: "10.0.3.43"
                   P1_PORT: "/dev/ttyUSB0"
                   POLL_INTERVAL: 10
                 ResourceAccessPolicies:
