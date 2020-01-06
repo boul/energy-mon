@@ -47,7 +47,7 @@ def main():
         pv_data = json.dumps(glob_pv_data)
         logger.debug(pv_data)
 
-        client.publish(topic + "/pv", pv_data, qos=1)
+        client.publish(topic=topic + "/pv", payload=pv_data, qos=1)
 
         # client.publish(topic + "/timestamp", str(int(time.time())))
         # for k, v in glob_pv_data.iteritems():
