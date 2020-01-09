@@ -114,7 +114,7 @@ Resources:
                   PV_ADDRESS: "10.0.3.43"
                   P1_PORT: "/dev/ttyUSB0"
                   POLL_INTERVAL: 10
-                ResourceAccessPolicies:
+                # ResourceAccessPolicies:
                 # - ResourceId: 'ttyUSB0'
                 #   Permission: rw
                 AccessSysfs: 'false'
