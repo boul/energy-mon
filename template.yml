@@ -37,7 +37,7 @@ Resources:
       FunctionDefinitionVersionArn: !GetAtt FunctionDefinition.LatestVersionArn
       SubscriptionDefinitionVersionArn: !GetAtt SubscriptionDefinition.LatestVersionArn
       ResourceDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
-
+      ConnectorDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
 
   GreengrassCoreDefinition:
     Type: AWS::Greengrass::CoreDefinition
@@ -73,6 +73,23 @@ Resources:
                   # - {'Fn::ImportValue': !Sub '${CoreName}-environment-IoTThingCertificateId'}
                   - "949b9799e50710f1e2c4b4c29ce2861f634e6336d87da70ad656fa0779d8bcaa"
           SyncShadow: "false"
+  
+  ConnectorDefinition:
+    Type: AWS::Greengrass::ConnectorDefinition
+    Properties:
+      Name: ConnectorDefinition
+      InitialVersion:
+        Connectors:
+          - ConnectorArn:  arn:aws:greengrass:eu-west-1::/connectors/DockerApplicationDeployment/versions/1
+            Id: ContainerConnector
+            Parameters: {
+                "DockerComposeFileS3Bucket": "boul-energy-mon",
+                "DockerComposeFileS3Key": "docker-compose.yml",
+                "DockerComposeFileDestinationPath": "/home/ggc_user/tesla.yml",
+                "AWSSecretsArnList": "[\"arn:aws:secretsmanager:region:account-id:secret:greengrass-secret1-hash\",\"arn:aws:secretsmanager:region:account-id:secret:greengrass-secret2-hash\"]",
+                "DockerContainerStatusLogFrequency": "30"
+            }
+      
 
   FunctionDefinition:
     Type: 'AWS::Greengrass::FunctionDefinition'

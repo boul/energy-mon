@@ -10,6 +10,7 @@ phases:
       - pip install --upgrade awscli
       - pip install -r requirements.txt -t .
       - ls
+      - aws s3 cp docker-compose.yml s3://boul-energy-mon
 
   pre_build:
     commands:
