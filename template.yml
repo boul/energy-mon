@@ -80,7 +80,7 @@ Resources:
       Name: ConnectorDefinition
       InitialVersion:
         Connectors:
-          - ConnectorArn:  arn:aws:greengrass:eu-west-1::/connectors/DockerApplicationDeployment/versions/1
+          - ConnectorArn: "arn:aws:greengrass:eu-west-1::/connectors/DockerApplicationDeployment/versions/1"
             Id: ContainerConnector
             Parameters: {
                 "DockerComposeFileS3Bucket": "boul-energy-mon",
