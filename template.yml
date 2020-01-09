@@ -85,7 +85,7 @@ Resources:
             Parameters: {
                 "DockerComposeFileS3Bucket": "boul-energy-mon",
                 "DockerComposeFileS3Key": "docker-compose.yml",
-                "DockerComposeFileDestinationPath": "/home/ggc_user/",
+                "DockerComposeFileDestinationPath": "/home/ggc_user",
                 "DockerContainerStatusLogFrequency": "30"
             }
       
