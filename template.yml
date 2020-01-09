@@ -37,7 +37,7 @@ Resources:
       FunctionDefinitionVersionArn: !GetAtt FunctionDefinition.LatestVersionArn
       SubscriptionDefinitionVersionArn: !GetAtt SubscriptionDefinition.LatestVersionArn
       ResourceDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
-      ConnectorDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
+      ConnectorDefinitionVersionArn: !GetAtt ConnectorDefinition.LatestVersionArn
 
   GreengrassCoreDefinition:
     Type: AWS::Greengrass::CoreDefinition
@@ -86,7 +86,6 @@ Resources:
                 "DockerComposeFileS3Bucket": "boul-energy-mon",
                 "DockerComposeFileS3Key": "docker-compose.yml",
                 "DockerComposeFileDestinationPath": "/home/ggc_user/tesla.yml",
-                "AWSSecretsArnList": "[\"arn:aws:secretsmanager:region:account-id:secret:greengrass-secret1-hash\",\"arn:aws:secretsmanager:region:account-id:secret:greengrass-secret2-hash\"]",
                 "DockerContainerStatusLogFrequency": "30"
             }
       
