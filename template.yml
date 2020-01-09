@@ -36,7 +36,7 @@ Resources:
       CoreDefinitionVersionArn: !Ref GreengrassCoreDefinitionVersion
       FunctionDefinitionVersionArn: !GetAtt FunctionDefinition.LatestVersionArn
       SubscriptionDefinitionVersionArn: !GetAtt SubscriptionDefinition.LatestVersionArn
-      ResourceDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
+      # ResourceDefinitionVersionArn: !GetAtt ResourceDefinition.LatestVersionArn
       ConnectorDefinitionVersionArn: !GetAtt ConnectorDefinition.LatestVersionArn
 
   GreengrassCoreDefinition:
